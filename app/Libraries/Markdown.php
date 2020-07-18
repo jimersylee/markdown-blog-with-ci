@@ -15,7 +15,7 @@ class Markdown
     private $tags;
 
     //所有的分类
-``    private $categories;
+    private $categories;
 
     //所有月份
     private $yearMonths;
