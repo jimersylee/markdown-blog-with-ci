@@ -14,7 +14,6 @@ use CodeIgniter\Database\Exceptions\DatabaseException;
 use CodeIgniter\Exceptions\PageNotFoundException;
 use Twig\Environment;
 use Twig\Error\Error;
-use Twig\Extension\CoreExtension;
 use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 

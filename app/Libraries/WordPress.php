@@ -2,7 +2,9 @@
 
 namespace App\Libraries;
 
-use App\ThirdParty\phpQuery;
+
+
+use phpQuery;
 
 /**
  * Class WordPress
@@ -28,9 +30,9 @@ class WordPress
 
         if (file_exists($this->wpPath)) {
             phpQuery::newDocumentFileXML($this->wpPath);
-            $itemArr = pq("channel item");
+            $itemArr = phpQuery::pq("channel item");
             if ($itemArr->size() > 0) {
-                phpQuery::each($itemArr, "WordPress::parseWpItem");
+                phpQuery::each($itemArr, array(WordPress::class,"parseWpItem"));
                 $this->_error = "finish!";
                 $flag = true;
             } else {
@@ -48,7 +50,6 @@ class WordPress
         $headerList = array("author", "head", "date", "title", "tags", "category", "status", "summary");
         $headerArray = array();
         array_push($headerArray, "<!--\n");
-
         foreach ($headerList as $headName) {
             switch ($headName) {
                 case "author":
@@ -104,17 +105,15 @@ class WordPress
     //解析wordpress XML
     public static function parseWpItem($index, $item)
     {
-        $wpItem = pq($item);
-
+        $wpItem = phpQuery::pq($item);
         $title = $wpItem->find("title")->html();
         $author = $wpItem->find("creator")->get(0)->nodeValue;
         $content = $wpItem->find("encoded")->get(0)->nodeValue;
-        $status = $wpItem->find("status")->html();
+        $status = $wpItem->find("status")->get(0)->nodeValue;
         if ($status != "publish") $status = "draft";
 
         $tags = $wpItem->find("category[domain=post_tag]");
-        $categorys = $wpItem->find("category[domain=category]");
-
+        $categorys = $wpItem->find('category[domain="category"]');
         $tagsArr = array();
         $categoryArr = array();
 
@@ -137,8 +136,8 @@ class WordPress
         $wpObj = array(
             "author" => $author,
             "content" => $content,
-            "title" => $wpItem->find("title")->html(),
-            "date" => $wpItem->find("post_date")->html(),
+            "title" => $title,
+            "date" => $wpItem->find("post_date")->get(0)->nodeValue,
             "ctime" => $wpItem->find("post_date_gmt")->html(),
             "fileName" => $wpItem->find("post_id")->html(),
             "status" => $status,

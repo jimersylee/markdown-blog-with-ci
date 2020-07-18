@@ -1,10 +1,12 @@
 <?php
 
-use App\Controllers\BaseController;
+namespace App\Controllers;
 
 /*
  * wordpress博客导入工具
  */
+
+use App\Libraries\WordPress;
 
 class Wp2Gb extends BaseController
 {
@@ -13,11 +15,8 @@ class Wp2Gb extends BaseController
     public function index()
     {
 
-        //非命令行访问，返回404
-        if (!$this->request->isCLI()) {
-            return false;
-        }
-        $wordpress = new \App\Libraries\WordPress();
+
+        $wordpress = new WordPress();
         $wordpress->loadWP();
         echo $wordpress->errMsg();
         return true;

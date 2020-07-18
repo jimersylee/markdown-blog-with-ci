@@ -19,7 +19,7 @@ markdown-blog是一个简单易用的Markdown博客系统，它不需要数据�
 8. 全站静态导出  
 9. 良好的SEO  
 
-## 三. GitBlog优势 ##
+## 三. markdown-blog优势 ##
  
 1. 无需数据库，系统更轻量，移植更方便  
 2. 使用Markdown编写，摆脱后台编辑排版困难，无法实时预览的缺点  
@@ -75,10 +75,10 @@ markdown-blog是一个简单易用的Markdown博客系统，它不需要数据�
 * markdown解析器升级为composer导入
 
 
-# 待测试
+# 已测试
 [x]feed
 [x]导出静态网站
-[]wordpresss导入
+[x]wordpresss导入
 [x]文章搜索功能
 [x]404
 
@@ -88,3 +88,5 @@ markdown-blog是一个简单易用的Markdown博客系统，它不需要数据�
     * quest模板全部改成twig后缀,便于IDE识别模板引擎
     * 渲染页面的时候直接选择模板名,不带后缀
     * develop环境不缓存页面内容
+    * phpQuery改成composer导入
+    * 修复导入wordpress5.4版本的文章分类不正确的问题

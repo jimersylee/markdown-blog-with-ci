@@ -28,8 +28,8 @@ class Yaml
 
         $defaultConf = array(
             "url" => "/",
-            "title" => "Your-GitBlog",
-            "subtitle" => "自豪地采用GitBlog",
+            "title" => "markdown-blog",
+            "subtitle" => "自豪地采用markdown-blog",
             "theme" => "simple",
             "enableCache" => true,
             "highlight" => true,
@@ -38,8 +38,8 @@ class Yaml
             "youyan" => "",
             "disqus" => "",
             "baiduAnalytics" => "",
-            "keywords" => "博客,Markdown博客,jockchou",
-            "description" => "GitBlog是一个简单易用的Markdown博客系统",
+            "keywords" => "博客,Markdown博客,jimersylee",
+            "description" => "一个简单易用的Markdown博客系统",
             "version" => "2.1",
             "author" => array(
                 "name" => "your-name",
@@ -56,7 +56,7 @@ class Yaml
             ),
             "text" => array(
                 "title" => "介绍",
-                "intro" => "本博客使用Gitblog搭建，欢迎你!"
+                "intro" => "本博客使用markdown-blog搭建，欢迎你!"
             )
         );
 

@@ -7,7 +7,7 @@
         <atom:link href="<?=$site['url']?>/feed.xml" rel="self" type="application/rss+xml" />
         <pubDate><?=date('Y-m-d H:m:s')?></pubDate>
         <lastBuildDate><?=date('Y-m-d H:m:s')?></lastBuildDate>
-        <generator>Gitblog v1.0</generator>
+        <generator>markdown-blog v1.0</generator>
         <?php foreach($blogList as $blog):?>
         <item>
             <title><?=$blog['title']?></title>

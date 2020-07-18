@@ -9,7 +9,7 @@ use App\Libraries\Yaml;
 
 /**
  * 主控制器,实现网站绝大多数功能
- * Class Gitblog
+ * Class MarkdownBlog
  * @package App\Controllers
  */
 class MarkdownBlog extends BaseController
@@ -82,7 +82,7 @@ class MarkdownBlog extends BaseController
 
         echo "\nexport category page\n";
         //分类下所有页面
-        $categoryList = $this->markdown->getAllCategorys();
+        $categoryList = $this->markdown->getAllCategories();
         foreach ($categoryList as $idx => $category) {
             $categoryId = $category['name'];
             $pages = $this->markdown->getCategoryTotalPages($categoryId, $pageSize);
@@ -269,7 +269,7 @@ class MarkdownBlog extends BaseController
         }
 
         //所有分类
-        $categoryList = $this->markdown->getAllCategorys();
+        $categoryList = $this->markdown->getAllCategories();
 
         //所有标签
         $tagsList = $this->markdown->getAllTags();

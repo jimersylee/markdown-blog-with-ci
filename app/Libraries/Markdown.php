@@ -15,7 +15,7 @@ class Markdown
     private $tags;
 
     //所有的分类
-    private $categorys;
+``    private $categories;
 
     //所有月份
     private $yearMonths;
@@ -25,9 +25,6 @@ class Markdown
 
     //域名根目录下的相对网址
     private $baseurl = "/";
-
-    //CI
-    private $CI;
 
     public function __construct()
     {
@@ -187,7 +184,7 @@ class Markdown
         $categoryObj = $this->gbReadCache($cacheKey);
 
         if ($categoryObj === false) {
-            foreach ($this->categorys as $idx => $category) {
+            foreach ($this->categories as $idx => $category) {
                 if ($category['id'] == $categoryId) {
                     $categoryObj = $category;
                     $this->gbWriteCache($cacheKey, $categoryObj);
@@ -335,9 +332,9 @@ class Markdown
     }
 
     //获取所有分类
-    public function getAllCategorys()
+    public function getAllCategories()
     {
-        return $this->categorys;
+        return $this->categories;
     }
 
     //获取所有标签
@@ -363,8 +360,6 @@ class Markdown
     {
         $parseDown = new Parsedown();
         return $parseDown->text($text);
-//        $Extra = new ParsedownExtra();
-//        return $Extra->text($text);
     }
 
     //加载所有的博客
@@ -372,7 +367,7 @@ class Markdown
     {
         $this->blogs = array();
         $this->tags = array();
-        $this->categorys = array();
+        $this->categories = array();
         $this->yearMonths = array();
         $this->enableCache = $config['enableCache'];
         $this->baseurl = $config['url'];
@@ -381,23 +376,20 @@ class Markdown
         if (!$this->globalDataCacheRead()) {
             //列出所有文件，可能包含非markdown文件
             helper("filesystem");
-            $mdfiles = get_dir_file_info($postPath, FALSE);
+            $mdFiles = get_dir_file_info($postPath, FALSE);
 
 
-            $this->readAllPostInfo($mdfiles, $postPath);
+            $this->readAllPostInfo($mdFiles, $postPath);
         }
     }
 
     //读取博客的基本信息
     private function readPostBaseInfo($serverPath)
     {
-        $keywrodsArr = array();
+
         $tagsArr = array();
         $cateArr = array();
-
         $matches = null;
-        $noteBlockArr = array();
-        $noteTmpArr = array();
         $pattern1 = '/<\!\-\-(.*?)\-\->/is';
         $pattern2 = '/^\s*(author|head|date|title|top|summary|images|tags|category|status)\s*:(.*?)$/im';
 
@@ -421,13 +413,13 @@ class Markdown
         preg_match($pattern1, $subject, $matches);
 
         if (isset($matches[1])) {
-            $procontent = trim($matches[1]);
-            $proarr = explode("\n", $procontent);
+            $content = trim($matches[1]);
+            $arr = explode("\n", $content);
 
-            foreach ($proarr as $proline) {
-                $proline = trim($proline);
-                if ($proline) {
-                    preg_match($pattern2, $proline, $matches);
+            foreach ($arr as $everyLine) {
+                $everyLine = trim($everyLine);
+                if ($everyLine) {
+                    preg_match($pattern2, $everyLine, $matches);
                     if (isset($matches[2])) {
                         $propName = trim($matches[1]);
                         $propVal = trim($matches[2]);
@@ -441,7 +433,7 @@ class Markdown
                                 break;
                             case "date":
                                 $time = strtotime($propVal);
-                                $blogProp['date'] = ($time === FALSE) ? "" : date("Y-m-d", $time);;
+                                $blogProp['date'] = ($time === FALSE) ? "" : date("Y-m-d", $time);
                                 break;
                             case "title":
                                 $blogProp['title'] = $propVal;
@@ -456,11 +448,11 @@ class Markdown
                                 $blogProp['images'] = $this->cleanKeywords2Arr($propVal);
                                 break;
                             case "tags":
-                                $blogProp['tags'] = $this->converStrArr($propVal, "tags");
+                                $blogProp['tags'] = $this->convertStrArr($propVal, "tags");
                                 $tagsArr = $this->cleanKeywords2Arr($propVal);
                                 break;
                             case "category":
-                                $blogProp['category'] = $this->converStrArr($propVal, "category");
+                                $blogProp['category'] = $this->convertStrArr($propVal, "category");
                                 $cateArr = $this->cleanKeywords2Arr($propVal);
                                 break;
                             case "status":
@@ -472,11 +464,11 @@ class Markdown
             }
         }
 
-        $keywrodsArr = array_merge($tagsArr, $cateArr);
+        $keywordsArr = array_merge($tagsArr, $cateArr);
 
         //关键字去重
-        $keywrodsArr = array_unique($keywrodsArr);
-        $blogProp['keywords'] = implode(",", $keywrodsArr);
+        $keywordsArr = array_unique($keywordsArr);
+        $blogProp['keywords'] = implode(",", $keywordsArr);
 
         $blogProp = $this->autoCheckBlogProps($blogProp);
         return $blogProp;
@@ -548,9 +540,9 @@ class Markdown
     }
 
     //读取所有博客的信息
-    private function readAllPostInfo($mdfiles, $postPath)
+    private function readAllPostInfo($mdFiles, $postPath)
     {
-        foreach ($mdfiles as $idx => $fileProp) {
+        foreach ($mdFiles as $idx => $fileProp) {
 
             $fileName = $fileProp['name'];
 
@@ -565,7 +557,7 @@ class Markdown
             $sitePath = $this->changeFileExt($relativePath);
             $siteURL = "blog/" . $this->changeFileExt($relativePath);
 
-            $siteURL = $this->urlencodeURI($siteURL);
+            $siteURL = $this->urlEncodeURI($siteURL);
             $blogId = md5($siteURL);
             $siteURL = $this->baseurl . $siteURL;
 
@@ -588,9 +580,9 @@ class Markdown
             //草稿状态的不处理
             if ($blogProp['status'] == "draft") continue;
 
-            $btime = strtotime($ctime);
+            $createTimestamp = strtotime($ctime);
             if (empty($blogProp['date'])) {
-                $blogProp['date'] = date("Y-m-d", $btime);
+                $blogProp['date'] = date("Y-m-d", $createTimestamp);
             }
 
             //按显示日期归档
@@ -619,10 +611,10 @@ class Markdown
     }
 
     //写缓存
-    private function gbWriteCache($key, $objdata)
+    private function gbWriteCache($key, $objData)
     {
-        if (ENVIRONMENT != "development" && $this->enableCache && !empty($objdata)) {
-            cache()->save($key, serialize($objdata), GB_DATA_CACHE_TIME);
+        if (ENVIRONMENT != "development" && $this->enableCache && !empty($objData)) {
+            cache()->save($key, serialize($objData), GB_DATA_CACHE_TIME);
         }
     }
 
@@ -642,7 +634,7 @@ class Markdown
         if (ENVIRONMENT != "development" && $this->enableCache) {
             $this->gbWriteCache(GB_BLOG_CACHE, $this->blogs);
             $this->gbWriteCache(GB_TAG_CACHE, $this->tags);
-            $this->gbWriteCache(GB_CATEGORY_CACHE, $this->categorys);
+            $this->gbWriteCache(GB_CATEGORY_CACHE, $this->categories);
             $this->gbWriteCache(GB_ARCHIVE_CACHE, $this->yearMonths);
         }
     }
@@ -653,14 +645,14 @@ class Markdown
 
         $blogs = $this->gbReadCache(GB_BLOG_CACHE);
         $tags = $this->gbReadCache(GB_TAG_CACHE);
-        $categorys = $this->gbReadCache(GB_CATEGORY_CACHE);
+        $categories = $this->gbReadCache(GB_CATEGORY_CACHE);
         $yearMonths = $this->gbReadCache(GB_ARCHIVE_CACHE);
-        if ($blogs === false || $tags === false || $categorys === false || $yearMonths === false) {
+        if ($blogs === false || $tags === false || $categories === false || $yearMonths === false) {
             return false;
         } else {
             $this->blogs = $blogs;
             $this->tags = $tags;
-            $this->categorys = $categorys;
+            $this->categories = $categories;
             $this->yearMonths = $yearMonths;
         }
         return true;
@@ -681,6 +673,7 @@ class Markdown
         }
         array_multisort($topArr, SORT_DESC, $dateArr, SORT_DESC, $ctimeArr, SORT_DESC, $blogArray);
         $this->blogs = $blogArray;
+        return $blogArray;
     }
 
     //对归档日期进行排序
@@ -720,7 +713,7 @@ class Markdown
     }
 
     //对URL中的中文编码
-    private function urlencodeURI($fileName)
+    private function urlEncodeURI($fileName)
     {
         $pics = explode('/', $fileName);
         $len = count($pics);
@@ -731,7 +724,7 @@ class Markdown
     }
 
     //将tags, category字符串转成数组
-    private function converStrArr($tags, $type)
+    private function convertStrArr($tags, $type)
     {
         $tagsObjArr = array();
 
@@ -753,7 +746,7 @@ class Markdown
                 if ($type == "tags") {
                     array_push($this->tags, $tagObj);
                 } else {
-                    array_push($this->categorys, $tagObj);
+                    array_push($this->categories, $tagObj);
                 }
             }
         }
@@ -764,7 +757,7 @@ class Markdown
     {
         $objArr = null;
         if ($type == "category") {
-            $objArr = $this->categorys;
+            $objArr = $this->categories;
         } else if ($type == "tags") {
             $objArr = $this->tags;
         } else if ($type == "yearMonths") {

@@ -12,6 +12,7 @@ class ComposerStaticInitf7b01c65a3804f9ddb14df4e33340a43
         '3917c79c5052b270641b5a200963dbc2' => __DIR__ . '/..' . '/kint-php/kint/init.php',
         '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        '42b90f7b59f92b850235729c788475e5' => __DIR__ . '/..' . '/somesh/php-query/phpQuery/phpQuery.php',
     );
 
     public static $prefixLengthsPsr4 = array (

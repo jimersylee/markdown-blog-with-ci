@@ -10,7 +10,9 @@
     "twig/twig": "^3.0",
     "ext-dom": "*",
     "ext-json": "*",
-    "erusev/parsedown": "^1.7"
+    "erusev/parsedown": "^1.7",
+    "ext-mbstring": "*",
+    "somesh/php-query": "^2.0"
   },
   "require-dev": {
     "mikey179/vfsstream": "1.6.*",

@@ -2020,6 +2020,47 @@
         "homepage": "https://github.com/sebastianbergmann/version"
     },
     {
+        "name": "somesh/php-query",
+        "version": "2.0",
+        "version_normalized": "2.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/slaith/phpQuery.git",
+            "reference": "91519876bb56ddc453a05be05d61c1a9489864c8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/slaith/phpQuery/zipball/91519876bb56ddc453a05be05d61c1a9489864c8",
+            "reference": "91519876bb56ddc453a05be05d61c1a9489864c8",
+            "shasum": "",
+            "mirrors": [
+                {
+                    "url": "https://mirrors.aliyun.com/composer/dists/%package%/%reference%.%type%",
+                    "preferred": true
+                }
+            ]
+        },
+        "time": "2018-04-19T11:48:21+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "files": [
+                "phpQuery/phpQuery.php"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "somesh",
+                "email": "mail@somesh.io"
+            }
+        ],
+        "description": "A composer wrapper for the phpQuery package"
+    },
+    {
         "name": "symfony/polyfill-ctype",
         "version": "v1.17.1",
         "version_normalized": "1.17.1.0",
